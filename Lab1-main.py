@@ -1,6 +1,6 @@
 import cv2
 
-# load an color image in grayscale
+# load a color image in grayscale
 img = cv2.imread('lena-1.png', cv2.IMREAD_COLOR)
 
 cv2.imshow("lena.png", img)
@@ -20,10 +20,5 @@ def print_image_information(image):
     print("Channels: ", channels)
     print("Data type: ", image.dtype)
 
-# Load in color
-img = cv2.imread('lena-1.png', cv2.IMREAD_GRAYSCALE)
-
-
 # Calling the function
 print_image_information(img)
-
