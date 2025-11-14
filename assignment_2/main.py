@@ -95,24 +95,22 @@ cv2.imwrite("Hsv_lena.png", hsv_img)
 
 
 # 7
-def hue_shifted(image, emptyPictureArray2, hue):
-    height, width = image.shape[:2]
+def hue_shifted(image, emptyPictureArray, hue: int = 50):
+    if emptyPictureArray is None or emptyPictureArray.size == 0 or emptyPictureArray.shape != image.shape:
+        hue_s = image.copy()
+    else:
+        np.copyto(emptyPictureArray, image)
+        hue_s = emptyPictureArray
 
-    #
-    for y in range (height):
-        for x in range (width):
-            new_pixel = image[y][x] + hue             # Gets the pixles from column x and row y. + hue increases channel
-            new_pixel = np.clip(new_pixel, 0, 255)      # Makes sure no channel goes past the limit
-            emptyPictureArray2[y,x] = new_pixel
+    shifted = (hue_s.astype(np.int16) + (hue)) % 256
+    shifted = shifted.astype(np.uint8)
 
-    return emptyPictureArray2
+    cv2.imwrite("Hue_shifted_lena.png", shifted)
+    return shifted
 
-
-height, width = img.shape[:2]
-emptyPictureArray2 = np.zeros((height, width, 3), dtype=np.uint8)
-
-hue_shifted_img = hue_shifted(img, emptyPictureArray2, 50)
-cv2.imwrite("Hue_shifted_lena.png", hue_shifted_img)
+height, width = image.shape[:2]
+emptyHueArray = np.zeros((height, width, 3), dtype=np.uint8)
+hue_img = hue_shifted(image, emptyHueArray, hue=50)
 
 
 
@@ -139,4 +137,5 @@ rot90 = rotation(img, 90)
 rot180 = rotation(img, 180)
 
 cv2.imwrite("Rotated_90.png", rot90)
+
 cv2.imwrite("Rotated_180.png", rot180)
