@@ -24,15 +24,15 @@ cv2.imwrite("Padded_lena.png", padded_img)
 # 2)
 def crop(image, x_0, y_0, x_1, y_1):
     h, w = image.shape[:2]
-    x_start = x_0
-    x_end = w - x_1
-    y_start = y_0
-    y_end = h - y_1
+    x_start = x_0       # Left cut
+    x_end = w - x_1     # Right cut
+    y_start = y_0       # Top cut
+    y_end = h - y_1     # Bottom cut
     cropped = image[y_start:y_end, x_start:x_end].copy()
     return cropped
 
 # Cropping the image the following pixels
-cropped_img = crop(img, 80, 130, 80, 130)
+cropped_img = crop(image, 80, 80, 130, 130)
 cv2.imwrite("Cropped_lena.png", cropped_img)
 
 
@@ -139,3 +139,4 @@ rot180 = rotation(img, 180)
 cv2.imwrite("Rotated_90.png", rot90)
 
 cv2.imwrite("Rotated_180.png", rot180)
+
